@@ -3,140 +3,334 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnLearning Session</title>
+<title>UnLearning Session — Pattern B</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:#0a0a0a;color:#e0e0e0;font-family:'Noto Sans JP',sans-serif;line-height:1.9;-webkit-font-smoothing:antialiased}
-:root{--accent:#7c5cbf;--accent-dim:rgba(124,92,191,0.06);--accent-glow:rgba(124,92,191,0.3)}
 
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 24px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 40% 40%,rgba(100,80,160,0.06) 0%,transparent 60%),radial-gradient(ellipse at 60% 60%,rgba(40,40,80,0.04) 0%,transparent 60%);animation:drift 20s ease-in-out infinite alternate}
-@keyframes drift{0%{transform:translate(0,0)}100%{transform:translate(-3%,2%)}}
-.hero-inner{position:relative;z-index:1;max-width:720px}
-.hero-tag{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:6px;color:#555;text-transform:uppercase;margin-bottom:40px}
-.hero h1{font-family:'Noto Serif JP',serif;font-size:clamp(22px,4.5vw,34px);font-weight:900;line-height:1.9;color:#fff;margin-bottom:32px}
-.hero h1 .accent{color:var(--accent)}
-.hero .hero-sub{font-size:15px;color:#666;line-height:2.0;max-width:520px;margin:0 auto}
-.hero .scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);font-size:11px;color:#333;letter-spacing:3px;animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: #0a0a0a;
+  color: #e0e0e0;
+  font-family: 'Noto Sans JP', sans-serif;
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+}
 
-.section{max-width:640px;margin:0 auto;padding:100px 24px}
-.sep{border-top:1px solid #1a1a1a}
-.bg-alt{background:#0d0d0d}
-.tag-label{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:5px;color:#444;text-transform:uppercase;margin-bottom:32px}
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 80px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(ellipse at 40% 40%, rgba(100,80,160,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 60% 60%, rgba(40,40,80,0.04) 0%, transparent 60%);
+  animation: drift 20s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-3%, 2%); }
+}
+.hero-inner { position: relative; z-index: 1; max-width: 720px; }
+.hero-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 6px;
+  color: #555; text-transform: uppercase; margin-bottom: 40px;
+}
+.hero h1 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(22px, 4.5vw, 34px);
+  font-weight: 900; line-height: 1.9; color: #fff; margin-bottom: 32px;
+}
+.hero h1 .accent { color: #7c5cbf; }
+.hero .hero-sub {
+  font-size: 15px; color: #666; line-height: 2.0;
+  max-width: 520px; margin: 0 auto;
+}
+.hero .scroll-hint {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; color: #333; letter-spacing: 3px;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+
+.section { max-width: 640px; margin: 0 auto; padding: 100px 24px; }
+.tag-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 5px;
+  color: #444; text-transform: uppercase; margin-bottom: 32px;
+}
 
 /* 共感 */
-.empathy-lead{font-family:'Noto Serif JP',serif;font-size:clamp(17px,3.5vw,23px);font-weight:700;color:#fff;line-height:2.2;margin-bottom:48px}
-.empathy-timeline{list-style:none;position:relative;padding-left:32px}
-.empathy-timeline::before{content:'';position:absolute;left:8px;top:8px;bottom:8px;width:1px;background:linear-gradient(180deg,#333 0%,var(--accent) 50%,#333 100%)}
-.empathy-timeline li{font-size:15px;color:#888;line-height:2.0;margin-bottom:28px;position:relative}
-.empathy-timeline li::before{content:'';position:absolute;left:-28px;top:12px;width:7px;height:7px;border-radius:50%;background:#333}
-.empathy-timeline li:nth-child(4)::before{background:var(--accent)}
-.empathy-timeline li:last-child::before{background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
-.empathy-timeline .now{color:#ccc;font-weight:500}
-.empathy-punchline{font-family:'Noto Serif JP',serif;font-size:17px;font-weight:700;color:var(--accent);margin-top:48px;line-height:2.0}
+.empathy { border-top: 1px solid #1a1a1a; }
+.empathy-lead {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(17px, 3.5vw, 23px); font-weight: 700;
+  color: #fff; line-height: 2.2; margin-bottom: 48px;
+}
+.empathy-timeline { list-style: none; position: relative; padding-left: 32px; }
+.empathy-timeline::before {
+  content: ''; position: absolute; left: 8px; top: 8px; bottom: 8px;
+  width: 1px; background: linear-gradient(180deg, #333 0%, #7c5cbf 50%, #333 100%);
+}
+.empathy-timeline li {
+  font-size: 15px; color: #888; line-height: 2.0; margin-bottom: 28px;
+  position: relative;
+}
+.empathy-timeline li::before {
+  content: ''; position: absolute; left: -28px; top: 12px;
+  width: 7px; height: 7px; border-radius: 50%; background: #333;
+}
+.empathy-timeline li:nth-child(4)::before { background: #7c5cbf; }
+.empathy-timeline li:last-child::before { background: #7c5cbf; box-shadow: 0 0 8px rgba(124,92,191,0.5); }
+.empathy-timeline .now {
+  color: #ccc; font-weight: 500;
+}
+.empathy-punchline {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 17px; font-weight: 700; color: #7c5cbf;
+  margin-top: 48px; line-height: 2.0;
+}
 
-/* 名付け */
-.naming h2{font-family:'Noto Serif JP',serif;font-size:clamp(20px,4vw,28px);font-weight:900;color:#fff;line-height:1.8;margin-bottom:40px}
-.naming-body{font-size:15px;color:#999;line-height:2.2}
-.naming-body p{margin-bottom:24px}
-.naming-body .strong{color:#e0e0e0;font-weight:700}
-.highlight-box{margin-top:40px;padding:32px;background:var(--accent-dim);border-left:3px solid var(--accent);border-radius:0 8px 8px 0}
-.highlight-box p{font-family:'Noto Serif JP',serif;font-size:16px;color:#ddd;line-height:2.0;margin-bottom:0}
+/* 問題 */
+.naming {
+  background: #0d0d0d;
+  border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;
+}
+.naming-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 5px;
+  color: #444; text-transform: uppercase; margin-bottom: 32px;
+}
+.naming h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(20px, 4vw, 28px); font-weight: 900;
+  color: #fff; line-height: 1.8; margin-bottom: 40px;
+}
+.naming-body { font-size: 15px; color: #999; line-height: 2.2; }
+.naming-body p { margin-bottom: 24px; }
+.naming-body .strong { color: #e0e0e0; font-weight: 700; }
+.naming-highlight {
+  margin-top: 40px; padding: 32px;
+  background: rgba(124,92,191,0.06);
+  border-left: 3px solid #7c5cbf; border-radius: 0 8px 8px 0;
+}
+.naming-highlight p {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 16px; color: #ddd; line-height: 2.0; margin-bottom: 0;
+}
 
 /* チェック */
-.check-intro{font-size:15px;color:#888;line-height:2.0;margin-bottom:40px}
-.check-list{list-style:none;counter-reset:chk}
-.check-list li{counter-increment:chk;font-size:15px;color:#999;line-height:2.0;margin-bottom:24px;padding:20px 24px 20px 56px;position:relative;border:1px solid #1a1a1a;border-radius:8px;transition:border-color .3s}
-.check-list li::before{content:counter(chk);position:absolute;left:20px;top:20px;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:var(--accent);opacity:.6}
-.check-list li:hover{border-color:#333}
-.check-result{font-family:'Noto Serif JP',serif;font-size:16px;font-weight:700;color:var(--accent);margin-top:40px;line-height:2.0;text-align:center}
+.check-intro { font-size: 15px; color: #888; line-height: 2.0; margin-bottom: 40px; }
+.check-list { list-style: none; counter-reset: chk; }
+.check-list li {
+  counter-increment: chk; font-size: 15px; color: #999; line-height: 2.0;
+  margin-bottom: 24px; padding: 20px 24px 20px 56px; position: relative;
+  border: 1px solid #1a1a1a; border-radius: 8px; transition: border-color 0.3s;
+}
+.check-list li::before {
+  content: counter(chk); position: absolute; left: 20px; top: 20px;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700;
+  color: #7c5cbf; opacity: 0.6;
+}
+.check-list li:hover { border-color: #333; }
+.check-result {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 16px; font-weight: 700; color: #7c5cbf;
+  margin-top: 40px; line-height: 2.0; text-align: center;
+}
 
 /* 転換 */
-.shift h2{font-family:'Noto Serif JP',serif;font-size:clamp(20px,4vw,28px);font-weight:900;color:#fff;line-height:1.8;margin-bottom:40px}
-.shift-body{font-size:15px;color:#999;line-height:2.2}
-.shift-body p{margin-bottom:24px}
-.shift-body .em{color:#fff;font-weight:500}
-.shift-concept{margin-top:48px;text-align:center;padding:48px 32px;border:1px solid #1a1a1a;border-radius:12px;background:linear-gradient(180deg,var(--accent-dim) 0%,transparent 100%)}
-.shift-concept .concept-name{font-family:'Inter',sans-serif;font-size:clamp(28px,6vw,42px);font-weight:700;color:#fff;letter-spacing:2px;margin-bottom:12px}
-.shift-concept .concept-sub{font-size:14px;color:#666;letter-spacing:2px}
+.shift h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(20px, 4vw, 28px); font-weight: 900;
+  color: #fff; line-height: 1.8; margin-bottom: 40px;
+}
+.shift-body { font-size: 15px; color: #999; line-height: 2.2; }
+.shift-body p { margin-bottom: 24px; }
+.shift-body .em { color: #fff; font-weight: 500; }
+.shift-concept {
+  margin-top: 48px; text-align: center; padding: 48px 32px;
+  border: 1px solid #1a1a1a; border-radius: 12px;
+  background: linear-gradient(180deg, rgba(124,92,191,0.03) 0%, transparent 100%);
+}
+.shift-concept .concept-name {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(28px, 6vw, 42px); font-weight: 700;
+  color: #fff; letter-spacing: 2px; margin-bottom: 12px;
+}
+.shift-concept .concept-sub { font-size: 14px; color: #666; letter-spacing: 2px; }
 
 /* メンター */
-.mentor-card{padding:40px;border:1px solid #1a1a1a;border-radius:12px;margin-bottom:40px}
-.mentor-name{font-family:'Noto Serif JP',serif;font-size:20px;font-weight:900;color:#fff;margin-bottom:8px}
-.mentor-title{font-size:13px;color:#555;letter-spacing:1px;margin-bottom:24px}
-.mentor-body{font-size:14px;color:#888;line-height:2.2}
-.mentor-body p{margin-bottom:16px}
-.mentor-quote{margin-top:32px;padding:24px;background:var(--accent-dim);border-radius:8px;font-family:'Noto Serif JP',serif;font-size:15px;color:#ccc;line-height:2.0;font-style:italic}
+.mentor-card {
+  padding: 40px; border: 1px solid #1a1a1a; border-radius: 12px; margin-bottom: 40px;
+}
+.mentor-name {
+  font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 8px;
+}
+.mentor-title { font-size: 13px; color: #555; letter-spacing: 1px; margin-bottom: 24px; }
+.mentor-body { font-size: 14px; color: #888; line-height: 2.2; }
+.mentor-body p { margin-bottom: 16px; }
+.mentor-quote {
+  margin-top: 32px; padding: 24px;
+  background: rgba(124,92,191,0.06); border-radius: 8px;
+  font-family: 'Noto Serif JP', serif; font-size: 15px; color: #ccc;
+  line-height: 2.0; font-style: italic;
+}
 
 /* 方法 */
-.method-intro{font-family:'Noto Serif JP',serif;font-size:clamp(18px,3.5vw,24px);font-weight:700;color:#fff;line-height:2.0;margin-bottom:56px}
-.method-step{margin-bottom:56px;padding-left:48px;position:relative}
-.method-step::before{content:attr(data-num);position:absolute;left:0;top:2px;font-family:'Inter',sans-serif;font-size:28px;font-weight:700;color:var(--accent);opacity:.6}
-.method-step h3{font-family:'Noto Serif JP',serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:16px}
-.method-step p{font-size:14px;color:#888;line-height:2.0}
-.method-cycle{margin-top:48px;text-align:center;padding:40px;border:1px solid #1a1a1a;border-radius:12px}
-.method-cycle p{font-size:14px;color:#666;line-height:2.0}
-.method-cycle .cycle-result{font-family:'Noto Serif JP',serif;font-size:17px;color:#fff;font-weight:700;margin-top:20px}
+.method {
+  background: #0d0d0d;
+  border-top: 1px solid #1a1a1a;
+}
+.method-intro {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(18px, 3.5vw, 24px); font-weight: 700;
+  color: #fff; line-height: 2.0; margin-bottom: 56px;
+}
+.method-step {
+  margin-bottom: 56px; padding-left: 48px; position: relative;
+}
+.method-step::before {
+  content: attr(data-num); position: absolute; left: 0; top: 2px;
+  font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 700;
+  color: #7c5cbf; opacity: 0.6;
+}
+.method-step h3 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 16px;
+}
+.method-step p { font-size: 14px; color: #888; line-height: 2.0; }
+.method-cycle {
+  margin-top: 48px; text-align: center; padding: 40px;
+  border: 1px solid #1a1a1a; border-radius: 12px;
+}
+.method-cycle p { font-size: 14px; color: #666; line-height: 2.0; }
+.method-cycle .cycle-result {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 17px; color: #fff; font-weight: 700; margin-top: 20px;
+}
 
 /* 封印テーブル */
-.seal-intro{font-size:15px;color:#888;line-height:2.0;margin-bottom:32px}
-.seal-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#1a1a1a;border-radius:8px;overflow:hidden;margin-bottom:24px}
-.seal-header{background:#151515;padding:16px;font-size:12px;font-weight:700;color:#555;text-align:center;letter-spacing:2px}
-.seal-header.before{color:#666}
-.seal-header.after{color:var(--accent)}
-.seal-cell{background:#0d0d0d;padding:16px 20px;font-size:14px;line-height:1.8}
-.seal-cell.before{color:#666;text-decoration:line-through;text-decoration-color:#333}
-.seal-cell.after{color:#ccc}
-.seal-note{font-size:13px;color:#555;line-height:1.8;text-align:center}
+.seal-intro { font-size: 15px; color: #888; line-height: 2.0; margin-bottom: 32px; }
+.seal-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  background: #1a1a1a; border-radius: 8px; overflow: hidden; margin-bottom: 24px;
+}
+.seal-header {
+  background: #151515; padding: 16px; font-size: 12px; font-weight: 700;
+  color: #555; text-align: center; letter-spacing: 2px;
+}
+.seal-header.after { color: #7c5cbf; }
+.seal-cell { background: #0d0d0d; padding: 16px 20px; font-size: 14px; line-height: 1.8; }
+.seal-cell.before { color: #666; text-decoration: line-through; text-decoration-color: #333; }
+.seal-cell.after { color: #ccc; }
+.seal-note { font-size: 13px; color: #555; line-height: 1.8; text-align: center; }
 
 /* ルート */
-.routes-body{font-size:15px;color:#999;line-height:2.2;margin-bottom:40px}
-.routes-body p{margin-bottom:24px}
-.routes-body .em{color:#fff;font-weight:500}
-.route-cards{display:flex;flex-direction:column;gap:16px}
-.route-card{padding:24px;border:1px solid #1a1a1a;border-radius:8px;transition:border-color .3s}
-.route-card:hover{border-color:#333}
-.route-card h4{font-size:14px;font-weight:700;color:#ccc;margin-bottom:8px}
-.route-card p{font-size:13px;color:#666;line-height:1.8}
+.routes-body { font-size: 15px; color: #999; line-height: 2.2; margin-bottom: 40px; }
+.routes-body p { margin-bottom: 24px; }
+.routes-body .em { color: #fff; font-weight: 500; }
+.route-cards { display: flex; flex-direction: column; gap: 16px; }
+.route-card {
+  padding: 24px; border: 1px solid #1a1a1a; border-radius: 8px; transition: border-color 0.3s;
+}
+.route-card:hover { border-color: #333; }
+.route-card h4 { font-size: 14px; font-weight: 700; color: #ccc; margin-bottom: 8px; }
+.route-card p { font-size: 13px; color: #666; line-height: 1.8; }
 
 /* ゴール */
-.goal{text-align:center;padding:120px 24px}
-.goal h2{font-family:'Noto Serif JP',serif;font-size:clamp(20px,4vw,28px);font-weight:900;color:#fff;line-height:1.8;margin-bottom:40px}
-.goal-body{font-size:15px;color:#888;line-height:2.2;max-width:480px;margin:0 auto}
-.goal-body p{margin-bottom:24px}
-.goal-final{font-family:'Noto Serif JP',serif;font-size:17px;font-weight:700;color:var(--accent);margin-top:40px;line-height:2.0}
+.goal { text-align: center; padding: 120px 24px; }
+.goal h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(20px, 4vw, 28px); font-weight: 900;
+  color: #fff; line-height: 1.8; margin-bottom: 40px;
+}
+.goal-body {
+  font-size: 15px; color: #888; line-height: 2.2;
+  max-width: 480px; margin: 0 auto;
+}
+.goal-body p { margin-bottom: 24px; }
+.goal-final {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 17px; font-weight: 700; color: #7c5cbf;
+  margin-top: 40px; line-height: 2.0;
+}
 
 /* 情熱チェック */
-.passion{text-align:center;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;background:#0d0d0d}
-.passion h2{font-family:'Noto Serif JP',serif;font-size:clamp(20px,4vw,28px);font-weight:900;color:#fff;line-height:1.8;margin-bottom:32px}
-.passion-body{font-size:15px;color:#888;line-height:2.2;max-width:480px;margin:0 auto}
-.passion-body p{margin-bottom:20px}
-.passion-body .yes{color:#ccc;font-weight:500}
-.passion-body .no{color:#888}
-.passion-final{font-size:15px;color:var(--accent);margin-top:32px;font-weight:500}
+.passion {
+  text-align: center; padding: 100px 24px;
+  border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;
+  background: #0d0d0d;
+}
+.passion h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(20px, 4vw, 28px); font-weight: 900;
+  color: #fff; line-height: 1.8; margin-bottom: 32px;
+}
+.passion-body {
+  font-size: 15px; color: #888; line-height: 2.2;
+  max-width: 480px; margin: 0 auto;
+}
+.passion-body p { margin-bottom: 20px; }
+.passion-body .yes { color: #ccc; font-weight: 500; }
+.passion-body .no { color: #888; }
+.passion-final { font-size: 15px; color: #7c5cbf; margin-top: 32px; font-weight: 500; }
 
 /* CTA */
-.cta{background:linear-gradient(180deg,#0a0a0a 0%,#111 50%,#0a0a0a 100%);text-align:center;padding:100px 24px;border-top:1px solid #1a1a1a}
-.cta h2{font-family:'Noto Serif JP',serif;font-size:clamp(22px,4.5vw,32px);font-weight:900;color:#fff;line-height:1.8;margin-bottom:48px}
-.cta-details{display:inline-block;text-align:left;margin-bottom:48px}
-.cta-detail-item{font-size:14px;color:#888;line-height:2.4;display:flex;gap:16px}
-.cta-detail-item .label{color:#555;min-width:80px;font-weight:500}
-.cta-detail-item .value{color:#ccc}
-.cta-button{display:inline-block;padding:20px 64px;background:var(--accent);color:#fff;font-family:'Noto Sans JP',sans-serif;font-size:15px;font-weight:700;text-decoration:none;border-radius:6px;letter-spacing:2px;transition:all .3s;border:none;cursor:pointer}
-.cta-button:hover{background:#6a4da8;transform:translateY(-2px);box-shadow:0 8px 32px var(--accent-glow)}
-.cta-note{font-size:12px;color:#444;margin-top:24px}
+.cta {
+  background: linear-gradient(180deg, #0a0a0a 0%, #111 50%, #0a0a0a 100%);
+  text-align: center; padding: 100px 24px; border-top: 1px solid #1a1a1a;
+}
+.cta-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 5px;
+  color: #444; text-transform: uppercase; margin-bottom: 32px;
+}
+.cta h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(22px, 4.5vw, 32px); font-weight: 900;
+  color: #fff; line-height: 1.8; margin-bottom: 48px;
+}
+.cta-details { display: inline-block; text-align: left; margin-bottom: 48px; }
+.cta-detail-item {
+  font-size: 14px; color: #888; line-height: 2.4; display: flex; gap: 16px;
+}
+.cta-detail-item .label { color: #555; min-width: 80px; font-weight: 500; }
+.cta-detail-item .value { color: #ccc; }
+.cta-button {
+  display: inline-block; padding: 20px 64px; background: #7c5cbf;
+  color: #fff; font-family: 'Noto Sans JP', sans-serif;
+  font-size: 15px; font-weight: 700; text-decoration: none;
+  border-radius: 6px; letter-spacing: 2px; transition: all 0.3s;
+  border: none; cursor: pointer;
+}
+.cta-button:hover {
+  background: #6a4da8; transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(124,92,191,0.3);
+}
+.cta-note { font-size: 12px; color: #444; margin-top: 24px; }
 
-.footer{text-align:center;padding:60px 24px;font-size:11px;color:#333;letter-spacing:2px}
-
-@media(max-width:600px){
-.section{padding:60px 20px}
-.method-step{padding-left:36px}
-.cta-button{padding:18px 48px}
-.seal-grid{grid-template-columns:1fr}
-.seal-header.before{display:none}
+.footer {
+  text-align: center; padding: 60px 24px;
+  font-size: 11px; color: #333; letter-spacing: 2px;
+}
+@media (max-width: 600px) {
+  .section { padding: 60px 20px; }
+  .method-step { padding-left: 36px; }
+  .cta-button { padding: 18px 48px; }
+  .seal-grid { grid-template-columns: 1fr; }
+  .seal-header.before { display: none; }
 }
 </style>
 </head>
@@ -146,15 +340,27 @@ body{background:#0a0a0a;color:#e0e0e0;font-family:'Noto Sans JP',sans-serif;line
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-tag">UnLearning Session</div>
-    <h1>最近、自分の発信を読み返して<br><span class="accent">「誰が書いたんだろう」</span><br>と思ったことはありませんか？</h1>
-    <p class="hero-sub">最初は自分の言葉だったはずなのに、<br>いつの間にか、自分の声がしなくなっている。</p>
+    <h1>
+      最近、自分の発信を読み返して<br>
+      <span class="accent">「誰が書いたんだろう」</span><br>
+      と思ったことはありませんか？
+    </h1>
+    <p class="hero-sub">
+      最初は自分の言葉だったはずなのに、<br>
+      いつの間にか、自分の声がしなくなっている。
+    </p>
   </div>
   <div class="scroll-hint">SCROLL</div>
 </section>
 
 <!-- 共感: 声を失った過程 -->
-<section class="section sep">
-  <p class="empathy-lead">思い出してみてください。<br>最初にコーチングを始めた頃、<br>あなたの言葉には、あなたしか出せない熱があった。</p>
+<section class="section empathy">
+  <p class="empathy-lead">
+    思い出してみてください。<br>
+    最初にコーチングを始めた頃、<br>
+    あなたの言葉には、あなたしか出せない熱があった。
+  </p>
+
   <ul class="empathy-timeline">
     <li>最初は、自分の言葉で書いていた</li>
     <li>いつからか、「正しい書き方」を覚えた</li>
@@ -162,26 +368,56 @@ body{background:#0a0a0a;color:#e0e0e0;font-family:'Noto Sans JP',sans-serif;line
     <li class="now">師匠の言い回しが、いつの間にか自分の口癖になった</li>
     <li class="now">気づいたら、自分の投稿なのに、自分の声がしない</li>
   </ul>
-  <p class="empathy-punchline">あなたの言葉は、いつから<br>「誰かの言葉のコピー」になったのでしょうか。</p>
+
+  <p class="empathy-punchline">
+    あなたの言葉は、いつから<br>
+    「誰かの言葉のコピー」になったのでしょうか。
+  </p>
 </section>
 
 <!-- 問題の名付け -->
-<section class="section naming sep bg-alt">
-  <div class="tag-label">The Real Problem</div>
-  <h2>「正しいことが言える」のと<br>「自分の言葉を持っている」のは<br>まったく違う。</h2>
+<section class="section naming">
+  <div class="naming-label">The Real Problem</div>
+  <h2>
+    「正しいことが言える」のと<br>
+    「自分の言葉を持っている」のは<br>
+    まったく違う。
+  </h2>
+
   <div class="naming-body">
-    <p>NLP、コーチング、心理学。<br>学ぶほど「正しい言い方」は増えた。<br>先生の言葉なら話せる。フレームワークなら使える。</p>
-    <p>でも、<span class="strong">いざ自分の言葉で語ろうとすると、何も出てこない。</span></p>
-    <p>「あなたのコーチング、何が違うの？」<br>この質問に、自分の言葉で答えられますか？<br>師匠の受け売りではなく。業界用語でもなく。<br><span class="strong">あなただけの言葉で。</span></p>
-    <p>答えられないなら、あなたが今持っているのは<br>「借り物の言語」かもしれません。</p>
+    <p>
+      NLP、コーチング、心理学。<br>
+      学ぶほど「正しい言い方」は増えた。<br>
+      先生の言葉なら話せる。フレームワークなら使える。
+    </p>
+    <p>
+      でも、<span class="strong">いざ自分の言葉で語ろうとすると、何も出てこない。</span>
+    </p>
+    <p>
+      「あなたのコーチング、何が違うの？」<br>
+      この質問に、自分の言葉で答えられますか？<br>
+      師匠の受け売りではなく。<br>
+      業界用語でもなく。<br>
+      <span class="strong">あなただけの言葉で。</span>
+    </p>
+    <p>
+      答えられないなら、あなたが今持っているのは<br>
+      「借り物の言語」かもしれません。
+    </p>
   </div>
-  <div class="highlight-box">
-    <p>借り物の言葉で武装するほど、本物の自分から遠ざかる。<br>あなたが売れない理由は、スキル不足ではなく「自分の声の不在」ではないでしょうか。</p>
+
+  <div class="naming-highlight">
+    <p>
+      借り物の言葉で武装するほど、<br>
+      本物の自分から遠ざかる。<br>
+      あなたが売れない理由は、<br>
+      スキル不足ではなく「自分の声の不在」ではないでしょうか。
+    </p>
   </div>
 </section>
 
 <!-- 声の消失度チェック -->
-<section class="section sep">
+<section class="section" style="border-top: 1px solid #1a1a1a;">
   <div class="tag-label">Self Check</div>
   <h2 style="font-family:'Noto Serif JP',serif;font-size:clamp(20px,4vw,26px);font-weight:900;color:#fff;line-height:1.8;margin-bottom:16px">あなたの「声の消失度」は？</h2>
   <p class="check-intro">3つの問いに正直に答えてみてください。</p>
@@ -194,13 +430,29 @@ body{background:#0a0a0a;color:#e0e0e0;font-family:'Noto Sans JP',sans-serif;line
 </section>
 
 <!-- 転換 -->
-<section class="section shift sep bg-alt">
-  <h2>学ぶほど、あなたの声は埋もれていく。<br>ならば、降ろすしかない。</h2>
+<section class="section shift">
+  <h2>
+    学ぶほど、あなたの声は埋もれていく。<br>
+    ならば、降ろすしかない。
+  </h2>
+
   <div class="shift-body">
-    <p>資格を一つ取るたびに、「正しい言い方」が一つ増えた。<br>セミナーに通うたびに、師匠の言い回しが一つ混ざった。<br><span class="em">足し算を重ねた結果、あなた自身の声が聞こえなくなった。</span></p>
-    <p>これ以上足しても、何も変わらない。<br>必要なのは、<span class="em">借り物を一つずつ降ろすこと。</span><br>師匠の言葉。業界の常識。資格で習ったテンプレート。<br>全部降ろした後に、最後に残る声。</p>
-    <p><span class="em">その声だけが、あなたの武器になる。</span></p>
+    <p>
+      資格を一つ取るたびに、「正しい言い方」が一つ増えた。<br>
+      セミナーに通うたびに、師匠の言い回しが一つ混ざった。<br>
+      <span class="em">足し算を重ねた結果、あなた自身の声が聞こえなくなった。</span>
+    </p>
+    <p>
+      これ以上足しても、何も変わらない。<br>
+      必要なのは、<span class="em">借り物を一つずつ降ろすこと。</span><br>
+      師匠の言葉。業界の常識。資格で習ったテンプレート。<br>
+      全部降ろした後に、最後に残る声。
+    </p>
+    <p>
+      <span class="em">その声だけが、あなたの武器になる。</span>
+    </p>
   </div>
+
   <div class="shift-concept">
     <div class="concept-name">UnLearning Session</div>
     <div class="concept-sub">間違った学びのデトックス</div>
@@ -208,7 +460,7 @@ body{background:#0a0a0a;color:#e0e0e0;font-family:'Noto Sans JP',sans-serif;line
 </section>
 
 <!-- メンター -->
-<section class="section sep">
+<section class="section" style="border-top: 1px solid #1a1a1a;">
   <div class="tag-label">Mentor</div>
   <div class="mentor-card">
     <div class="mentor-name">タナカミノル</div>
@@ -225,28 +477,55 @@ body{background:#0a0a0a;color:#e0e0e0;font-family:'Noto Sans JP',sans-serif;line
 </section>
 
 <!-- 方法 -->
-<section class="section bg-alt sep">
-  <p class="method-intro">3ヶ月間、<br>3つのプロセスだけを繰り返す。</p>
+<section class="section method">
+  <p class="method-intro">
+    3ヶ月間、<br>
+    3つのプロセスだけを繰り返す。
+  </p>
+
   <div class="method-step" data-num="1">
     <h3>書く</h3>
-    <p>自分の言葉だけで書く。<br>フレームワーク禁止。正解禁止。誰かの受け売り、禁止。<br>書こうとした瞬間、手が止まる。<br>その「止まった場所」こそが、借り物に頼っていた場所です。</p>
+    <p>
+      自分の言葉だけで書く。<br>
+      フレームワーク禁止。正解禁止。誰かの受け売り、禁止。<br>
+      書こうとした瞬間、手が止まる。<br>
+      その「止まった場所」こそが、借り物に頼っていた場所です。
+    </p>
   </div>
+
   <div class="method-step" data-num="2">
     <h3>暴かれる</h3>
-    <p>タナカミノルがあなたの文章をプロファイリングする。<br>「この表現は借り物」「ここに防御がある」「ここだけが本物」。<br>教わるのではない。暴かれる。<br>優しくはない。でも、嘘がない。</p>
+    <p>
+      タナカミノルがあなたの文章をプロファイリングする。<br>
+      「この表現は借り物」「ここに防御がある」「ここだけが本物」。<br>
+      教わるのではない。暴かれる。<br>
+      優しくはない。でも、嘘がない。
+    </p>
   </div>
+
   <div class="method-step" data-num="3">
     <h3>映される</h3>
-    <p>AIがあなたの言語パターンを構造分析する。<br>借り物の言葉と、固有の言葉の比率。<br>無意識に繰り返す回避パターン。<br>鏡のように、「あなたの言語の正体」を映し出す。</p>
+    <p>
+      AIがあなたの言語パターンを構造分析する。<br>
+      借り物の言葉と、固有の言葉の比率。<br>
+      無意識に繰り返す回避パターン。<br>
+      鏡のように、「あなたの言語の正体」を映し出す。
+    </p>
   </div>
+
   <div class="method-cycle">
-    <p>書いて、暴かれて、映されて、また書く。<br>このサイクルを回すたびに、借り物が一枚ずつ剥がれていく。</p>
-    <p class="cycle-result">最後に残るのは、あなただけの声。</p>
+    <p>
+      書いて、暴かれて、映されて、また書く。<br>
+      このサイクルを回すたびに、借り物が一枚ずつ剥がれていく。
+    </p>
+    <p class="cycle-result">
+      最後に残るのは、あなただけの声。
+    </p>
   </div>
 </section>
 
 <!-- 封印→置き換え -->
-<section class="section sep">
+<section class="section" style="border-top: 1px solid #1a1a1a;">
   <div class="tag-label">What Changes</div>
   <h2 style="font-family:'Noto Serif JP',serif;font-size:clamp(18px,3.5vw,24px);font-weight:900;color:#fff;line-height:1.8;margin-bottom:16px">借り物の言葉を「封印」して、<br>自分の声に「置き換える」。</h2>
   <p class="seal-intro">このプログラムでは、いつの間にか身についた他人の言葉を一つずつ封印し、あなた固有の声を取り戻していきます。</p>
@@ -268,7 +547,7 @@ body{background:#0a0a0a;color:#e0e0e0;font-family:'Noto Sans JP',sans-serif;line
 </section>
 
 <!-- ルート分岐 -->
-<section class="section sep bg-alt">
+<section class="section" style="border-top: 1px solid #1a1a1a; background: #0d0d0d;">
   <div class="tag-label">Your Route</div>
   <h2 style="font-family:'Noto Serif JP',serif;font-size:clamp(18px,3.5vw,24px);font-weight:900;color:#fff;line-height:1.8;margin-bottom:16px">全員に同じ処方箋は出しません。</h2>
   <div class="routes-body">
@@ -293,17 +572,35 @@ body{background:#0a0a0a;color:#e0e0e0;font-family:'Noto Sans JP',sans-serif;line
 
 <!-- ゴール -->
 <section class="goal">
-  <h2>自分の声を取り戻した人は、<br>もう「何が違うの？」に<br>困らない。</h2>
+  <h2>
+    自分の声を取り戻した人は、<br>
+    もう「何が違うの？」に<br>
+    困らない。
+  </h2>
+
   <div class="goal-body">
-    <p>差別化は、キャッチコピーの問題ではありません。<br>ポジショニングの問題でも、ブランディングの問題でもない。</p>
-    <p>自分の声を持っているかどうか。<br>ただそれだけで、1000人の中の「この人」になれる。</p>
-    <p>自分の声で語れる人の発信は、読めばわかる。<br>一番身近な家族にすら届く言葉は、<br>見知らぬ誰かの心も動かす。</p>
+    <p>
+      差別化は、キャッチコピーの問題ではありません。<br>
+      ポジショニングの問題でも、ブランディングの問題でもない。
+    </p>
+    <p>
+      自分の声を持っているかどうか。<br>
+      ただそれだけで、1000人の中の「この人」になれる。
+    </p>
+    <p>
+      自分の声で語れる人の発信は、読めばわかる。<br>
+      一番身近な家族にすら届く言葉は、<br>
+      見知らぬ誰かの心も動かす。
+    </p>
   </div>
-  <p class="goal-final">あなたの声は、消えたのではない。<br>借り物の下に、まだある。</p>
+  <p class="goal-final">
+    あなたの声は、消えたのではない。<br>
+    借り物の下に、まだある。
+  </p>
 </section>
 
 <!-- 情熱チェック -->
-<section class="section passion">
+<section class="passion">
   <h2>最後に、<br>一つだけ聞かせてください。</h2>
   <div class="passion-body">
     <p style="font-family:'Noto Serif JP',serif;font-size:18px;color:#fff;font-weight:700;margin-bottom:32px">もしコーチングで一生食えないとわかったら、<br>それでも続けますか？</p>
@@ -315,16 +612,33 @@ body{background:#0a0a0a;color:#e0e0e0;font-family:'Noto Sans JP',sans-serif;line
 
 <!-- CTA -->
 <section class="cta">
-  <div class="tag-label">Phase A — Test Monitor</div>
-  <h2>UnLearning Session<br>テストモニター募集</h2>
+  <div class="cta-tag">Phase A — Test Monitor</div>
+  <h2>
+    UnLearning Session<br>
+    テストモニター募集
+  </h2>
+
   <div class="cta-details">
-    <div class="cta-detail-item"><span class="label">期間</span><span class="value">3ヶ月（12週間）</span></div>
-    <div class="cta-detail-item"><span class="label">人数</span><span class="value">10名限定</span></div>
-    <div class="cta-detail-item"><span class="label">参加費</span><span class="value">無料</span></div>
-    <div class="cta-detail-item"><span class="label">条件</span><span class="value">毎週のレポート提出</span></div>
-    <div class="cta-detail-item"><span class="label">対象</span><span class="value">コーチング・セミナー・コンサル等<br>無形商品を扱う方</span></div>
-    <div class="cta-detail-item"><span class="label">主宰</span><span class="value">タナカミノル</span></div>
+    <div class="cta-detail-item">
+      <span class="label">期間</span><span class="value">3ヶ月（12週間）</span>
+    </div>
+    <div class="cta-detail-item">
+      <span class="label">人数</span><span class="value">10名限定</span>
+    </div>
+    <div class="cta-detail-item">
+      <span class="label">参加費</span><span class="value">無料</span>
+    </div>
+    <div class="cta-detail-item">
+      <span class="label">条件</span><span class="value">毎週のレポート提出</span>
+    </div>
+    <div class="cta-detail-item">
+      <span class="label">対象</span><span class="value">コーチング・セミナー・コンサル等<br>無形商品を扱う方</span>
+    </div>
+    <div class="cta-detail-item">
+      <span class="label">主宰</span><span class="value">タナカミノル</span>
+    </div>
   </div>
+
   <a href="#" class="cta-button">応募する</a>
   <p class="cta-note">応募後、選考の上ご連絡いたします</p>
 </section>
