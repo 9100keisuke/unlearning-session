@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UnLearning Session — Pattern C</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: #0a0a0a;
+  color: #e0e0e0;
+  font-family: 'Noto Sans JP', sans-serif;
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center; text-align: center;
+  padding: 80px 24px; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(ellipse at 50% 40%, rgba(180,140,40,0.05) 0%, transparent 60%),
+              radial-gradient(ellipse at 30% 70%, rgba(120,80,20,0.03) 0%, transparent 60%);
+  animation: drift 20s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-3%, 2%); }
+}
+.hero-inner { position: relative; z-index: 1; max-width: 720px; }
+.hero-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 6px;
+  color: #555; text-transform: uppercase; margin-bottom: 40px;
+}
+.hero h1 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(24px, 5vw, 38px); font-weight: 900;
+  line-height: 1.8; color: #fff; margin-bottom: 32px;
+}
+.hero h1 .accent { color: #b8860b; }
+.hero .hero-sub {
+  font-size: 15px; color: #666; line-height: 2.0;
+  max-width: 500px; margin: 0 auto;
+}
+.hero .scroll-hint {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; color: #333; letter-spacing: 3px;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+
+.section { max-width: 640px; margin: 0 auto; padding: 100px 24px; }
+
+/* 共感: 挑戦状 */
+.empathy { border-top: 1px solid #1a1a1a; }
+.empathy-challenge {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(17px, 3.5vw, 22px); font-weight: 700;
+  color: #fff; line-height: 2.2; margin-bottom: 48px;
+}
+.empathy-commands { list-style: none; }
+.empathy-commands li {
+  font-size: 15px; color: #999; line-height: 2.0; margin-bottom: 16px;
+  padding: 16px 24px;
+  background: rgba(184,134,11,0.04);
+  border-left: 2px solid #333;
+  border-radius: 0 6px 6px 0;
+  transition: border-color 0.3s;
+}
+.empathy-commands li:last-child {
+  border-left-color: #b8860b;
+  color: #ccc;
+}
+.empathy-question {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 20px; font-weight: 900; color: #fff;
+  margin-top: 48px; line-height: 2.0; text-align: center;
+}
+.empathy-answer {
+  font-size: 15px; color: #b8860b; text-align: center;
+  margin-top: 16px; line-height: 2.0;
+}
+
+/* 問題の名付け */
+.naming {
+  background: #0d0d0d;
+  border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;
+}
+.naming-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 5px;
+  color: #444; text-transform: uppercase; margin-bottom: 32px;
+}
+.naming h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(20px, 4vw, 28px); font-weight: 900;
+  color: #fff; line-height: 1.8; margin-bottom: 40px;
+}
+.naming-body { font-size: 15px; color: #999; line-height: 2.2; }
+.naming-body p { margin-bottom: 24px; }
+.naming-body .strong { color: #e0e0e0; font-weight: 700; }
+.naming-contrast {
+  margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+}
+.naming-contrast-item {
+  padding: 28px; border-radius: 8px; text-align: center;
+}
+.naming-contrast-item.fake {
+  background: rgba(255,255,255,0.02); border: 1px solid #222;
+}
+.naming-contrast-item.real {
+  background: rgba(184,134,11,0.06); border: 1px solid rgba(184,134,11,0.2);
+}
+.naming-contrast-item .contrast-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px; font-weight: 600; letter-spacing: 3px;
+  color: #555; text-transform: uppercase; margin-bottom: 12px;
+}
+.naming-contrast-item.real .contrast-label { color: #b8860b; }
+.naming-contrast-item .contrast-text {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 14px; color: #888; line-height: 1.8;
+}
+.naming-contrast-item.real .contrast-text { color: #ccc; }
+
+/* 転換 */
+.shift h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(20px, 4vw, 28px); font-weight: 900;
+  color: #fff; line-height: 1.8; margin-bottom: 40px;
+}
+.shift-body { font-size: 15px; color: #999; line-height: 2.2; }
+.shift-body p { margin-bottom: 24px; }
+.shift-body .em { color: #fff; font-weight: 500; }
+.shift-concept {
+  margin-top: 48px; text-align: center; padding: 48px 32px;
+  border: 1px solid #1a1a1a; border-radius: 12px;
+  background: linear-gradient(180deg, rgba(184,134,11,0.03) 0%, transparent 100%);
+}
+.shift-concept .concept-name {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(28px, 6vw, 42px); font-weight: 700;
+  color: #fff; letter-spacing: 2px; margin-bottom: 12px;
+}
+.shift-concept .concept-sub { font-size: 14px; color: #666; letter-spacing: 2px; }
+
+/* 方法 */
+.method { background: #0d0d0d; border-top: 1px solid #1a1a1a; }
+.method-intro {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(18px, 3.5vw, 24px); font-weight: 700;
+  color: #fff; line-height: 2.0; margin-bottom: 56px;
+}
+.method-step {
+  margin-bottom: 56px; padding-left: 48px; position: relative;
+}
+.method-step::before {
+  content: attr(data-num); position: absolute; left: 0; top: 2px;
+  font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 700;
+  color: #b8860b; opacity: 0.6;
+}
+.method-step h3 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 16px;
+}
+.method-step p { font-size: 14px; color: #888; line-height: 2.0; }
+.method-cycle {
+  margin-top: 48px; text-align: center; padding: 40px;
+  border: 1px solid #1a1a1a; border-radius: 12px;
+}
+.method-cycle p { font-size: 14px; color: #666; line-height: 2.0; }
+.method-cycle .cycle-result {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 17px; color: #fff; font-weight: 700; margin-top: 20px;
+}
+
+/* ゴール */
+.goal { text-align: center; padding: 120px 24px; }
+.goal h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(20px, 4vw, 28px); font-weight: 900;
+  color: #fff; line-height: 1.8; margin-bottom: 40px;
+}
+.goal-body {
+  font-size: 15px; color: #888; line-height: 2.2;
+  max-width: 480px; margin: 0 auto;
+}
+.goal-body p { margin-bottom: 24px; }
+.goal-final {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 17px; font-weight: 700; color: #b8860b;
+  margin-top: 40px; line-height: 2.0;
+}
+
+/* CTA */
+.cta {
+  background: linear-gradient(180deg, #0a0a0a 0%, #111 50%, #0a0a0a 100%);
+  text-align: center; padding: 100px 24px; border-top: 1px solid #1a1a1a;
+}
+.cta-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 5px;
+  color: #444; text-transform: uppercase; margin-bottom: 32px;
+}
+.cta h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(22px, 4.5vw, 32px); font-weight: 900;
+  color: #fff; line-height: 1.8; margin-bottom: 48px;
+}
+.cta-details { display: inline-block; text-align: left; margin-bottom: 48px; }
+.cta-detail-item {
+  font-size: 14px; color: #888; line-height: 2.4; display: flex; gap: 16px;
+}
+.cta-detail-item .label { color: #555; min-width: 80px; font-weight: 500; }
+.cta-detail-item .value { color: #ccc; }
+.cta-button {
+  display: inline-block; padding: 20px 64px; background: #b8860b;
+  color: #fff; font-family: 'Noto Sans JP', sans-serif;
+  font-size: 15px; font-weight: 700; text-decoration: none;
+  border-radius: 6px; letter-spacing: 2px; transition: all 0.3s;
+  border: none; cursor: pointer;
+}
+.cta-button:hover {
+  background: #a07608; transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(184,134,11,0.3);
+}
+.cta-note { font-size: 12px; color: #444; margin-top: 24px; }
+
+.footer {
+  text-align: center; padding: 60px 24px;
+  font-size: 11px; color: #333; letter-spacing: 2px;
+}
+@media (max-width: 600px) {
+  .section { padding: 60px 20px; }
+  .method-step { padding-left: 36px; }
+  .cta-button { padding: 18px 48px; }
+  .naming-contrast { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">UnLearning Session</div>
+    <h1>
+      あなたのスキル、<br>
+      <span class="accent">家族の前で</span><br>
+      使ったことはありますか？
+    </h1>
+    <p class="hero-sub">
+      クライアントの人生は変えられるのに、<br>
+      一番近くにいる人には、何も届いていない。
+    </p>
+  </div>
+  <div class="scroll-hint">SCROLL</div>
+</section>
+
+<!-- 共感: 挑戦状 -->
+<section class="section empathy">
+  <p class="empathy-challenge">
+    一つだけ、試してみてください。
+  </p>
+
+  <ul class="empathy-commands">
+    <li>セッションルームから出てください。</li>
+    <li>契約書を外してください。</li>
+    <li>「先生」という肩書きを捨ててください。</li>
+    <li>フレームワークを封印してください。</li>
+    <li>その状態で、目の前の家族と向き合ってください。</li>
+  </ul>
+
+  <p class="empathy-question">
+    その状態で、<br>
+    あなたは何ができますか？
+  </p>
+  <p class="empathy-answer">
+    できるなら、それが実力。<br>
+    できないなら、今まで何に頼っていたか——わかるはずです。
+  </p>
+</section>
+
+<!-- 問題の名付け -->
+<section class="section naming">
+  <div class="naming-label">The Real Problem</div>
+  <h2>
+    クライアントの人生は変えられるのに、<br>
+    妻との関係すら変えられない。<br>
+    この矛盾の正体。
+  </h2>
+
+  <div class="naming-body">
+    <p>
+      契約があるから機能する。<br>
+      お金をもらっているから本気になれる。<br>
+      役割が決まっているから「先生」でいられる。
+    </p>
+    <p>
+      <span class="strong">それ、全部外したら？</span>
+    </p>
+    <p>
+      一番身近な家族にすら通用しないスキルで、<br>
+      なぜ他人の人生を変えられると思えるのか。<br>
+      この矛盾に気づいた瞬間が、変化の入口です。
+    </p>
+  </div>
+
+  <div class="naming-contrast">
+    <div class="naming-contrast-item fake">
+      <div class="contrast-label">お膳立てスキル</div>
+      <div class="contrast-text">
+        契約がある<br>
+        肩書きがある<br>
+        フレームワークがある<br>
+        セッションルームがある<br>
+        ——守られた環境で機能する力
+      </div>
+    </div>
+    <div class="naming-contrast-item real">
+      <div class="contrast-label">本物の実力</div>
+      <div class="contrast-text">
+        契約がない<br>
+        肩書きがない<br>
+        フレームワークがない<br>
+        逃げ場がない<br>
+        ——素手で人を動かせる力
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 転換 -->
+<section class="section shift">
+  <h2>
+    お膳立てを外すことでしか、<br>
+    本物の実力は見えてこない。
+  </h2>
+
+  <div class="shift-body">
+    <p>
+      今のあなたが持っているスキルの大半は、借り物です。<br>
+      師匠から借りた言葉。資格で学んだフレーム。業界の常識。<br>
+      <span class="em">それらを全部降ろさないと、本物の自分に出会えない。</span>
+    </p>
+    <p>
+      もう一つ資格を取っても、この矛盾は解消しない。<br>
+      足し算で解けない問題は、<span class="em">引き算でしか解けない。</span>
+    </p>
+    <p>
+      借り物を降ろして、裸の状態で勝負する。<br>
+      家族という「最もハードなストリート」で通じる力をつける。<br>
+      <span class="em">それが、このプログラムの目的です。</span>
+    </p>
+  </div>
+
+  <div class="shift-concept">
+    <div class="concept-name">UnLearning Session</div>
+    <div class="concept-sub">間違った学びのデトックス</div>
+  </div>
+</section>
+
+<!-- 方法 -->
+<section class="section method">
+  <p class="method-intro">
+    3ヶ月間、<br>
+    3つのプロセスだけを繰り返す。
+  </p>
+
+  <div class="method-step" data-num="1">
+    <h3>書く</h3>
+    <p>
+      自分の言葉だけで書く。<br>
+      フレームワーク禁止。正解禁止。誰かの受け売り、禁止。<br>
+      書こうとした瞬間、手が止まる。<br>
+      その「止まった場所」こそが、借り物に頼っていた場所です。
+    </p>
+  </div>
+
+  <div class="method-step" data-num="2">
+    <h3>暴かれる</h3>
+    <p>
+      メンターがあなたの文章をプロファイリングする。<br>
+      「この表現は借り物」「ここに防御がある」「ここだけが本物」。<br>
+      教わるのではない。暴かれる。<br>
+      優しくはない。でも、嘘がない。
+    </p>
+  </div>
+
+  <div class="method-step" data-num="3">
+    <h3>映される</h3>
+    <p>
+      AIがあなたの言語パターンを構造分析する。<br>
+      借り物の言葉と、固有の言葉の比率。<br>
+      無意識に繰り返す回避パターン。<br>
+      鏡のように、「あなたの言語の正体」を映し出す。
+    </p>
+  </div>
+
+  <div class="method-cycle">
+    <p>
+      書いて、暴かれて、映されて、また書く。<br>
+      このサイクルを回すたびに、借り物が一枚ずつ剥がれていく。
+    </p>
+    <p class="cycle-result">
+      最後に残るのは、素手で人を動かせる力。
+    </p>
+  </div>
+</section>
+
+<!-- ゴール -->
+<section class="goal">
+  <h2>
+    家族の前で通じる力は、<br>
+    どこに行っても通じる。
+  </h2>
+
+  <div class="goal-body">
+    <p>
+      契約がなくても、人が変わる。<br>
+      肩書きがなくても、信頼される。<br>
+      フレームワークがなくても、言葉が届く。
+    </p>
+    <p>
+      一番身近な家族にすら届く言葉を持った人間が、<br>
+      見知らぬクライアントに届かないわけがない。
+    </p>
+    <p>
+      「あなたのコーチング、何が違うの？」<br>
+      その質問に、もう困らない。<br>
+      答えは、あなたの中にすでにある。<br>
+      借り物の下に、埋もれているだけです。
+    </p>
+  </div>
+  <p class="goal-final">
+    お膳立てを全部外した先にある力。<br>
+    それが、あなたの本当の実力です。
+  </p>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-tag">Phase A — Test Monitor</div>
+  <h2>
+    UnLearning Session<br>
+    テストモニター募集
+  </h2>
+
+  <div class="cta-details">
+    <div class="cta-detail-item">
+      <span class="label">期間</span><span class="value">3ヶ月（12週間）</span>
+    </div>
+    <div class="cta-detail-item">
+      <span class="label">人数</span><span class="value">10名限定</span>
+    </div>
+    <div class="cta-detail-item">
+      <span class="label">参加費</span><span class="value">無料</span>
+    </div>
+    <div class="cta-detail-item">
+      <span class="label">条件</span><span class="value">毎週のレポート提出</span>
+    </div>
+    <div class="cta-detail-item">
+      <span class="label">対象</span><span class="value">コーチング・セミナー・コンサル等<br>無形商品を扱う方</span>
+    </div>
+  </div>
+
+  <a href="#" class="cta-button">応募する</a>
+  <p class="cta-note">応募後、選考の上ご連絡いたします</p>
+</section>
+
+<footer class="footer">UnLearning Session</footer>
+</body>
+</html>
